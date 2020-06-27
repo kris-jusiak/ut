@@ -15,14 +15,13 @@ function(example file target)
     ut_add_custom_command_or_test(TARGET boost_ut_${target} COMMAND ${BOOST_UT_MEMORYCHECK_COMMAND}
                                   --leak-check=full --error-exitcode=1 ./boost_ut_${target} ${ARGN})
   else()
-    ut_add_custom_command_or_test(TARGET boost_ut_${target} COMMAND LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${TBB_SHARED_LIB_DIR} boost_ut_${target} ${ARGN})
+    ut_add_custom_command_or_test(TARGET boost_ut_${target} COMMAND LD_LIBRARY_PATH=${TBB_SHARED_LIB_DIR} boost_ut_${target} ${ARGN})
   endif()
 endfunction()
 
 example(cfg/printer printer)
 example(cfg/runner runner)
 
-example(cfg/parallel_runner parallel_runner)
 if (DEFINED ENV{TBB_ROOT})
   set(TBB_ROOT $ENV{TBB_ROOT})
   include(${TBB_ROOT}/cmake/TBBBuild.cmake)
@@ -30,6 +29,7 @@ if (DEFINED ENV{TBB_ROOT})
   find_package(TBB)
   target_link_libraries(boost_ut_parallel_runner ${TBB_IMPORTED_TARGETS})
 endif()
+example(cfg/parallel_runner parallel_runner)
 
 example(cfg/reporter reporter)
 
