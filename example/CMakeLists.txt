@@ -15,7 +15,7 @@ function(example file target)
     ut_add_custom_command_or_test(TARGET boost_ut_${target} COMMAND ${BOOST_UT_MEMORYCHECK_COMMAND}
                                   --leak-check=full --error-exitcode=1 ./boost_ut_${target} ${ARGN})
   else()
-    ut_add_custom_command_or_test(TARGET boost_ut_${target} COMMAND boost_ut_${target} ${ARGN})
+    ut_add_custom_command_or_test(TARGET boost_ut_${target} COMMAND LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${TBB_SHARED_LIB_DIR} boost_ut_${target} ${ARGN})
   endif()
 endfunction()
 
