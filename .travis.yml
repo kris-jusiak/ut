@@ -102,6 +102,7 @@ matrix:
 script:
   - git clone --depth 1 https://github.com/intel/tbb.git
   - export TBB_ROOT="$PWD/tbb"
+  - export VERBOSE=1
   - if [ "${VARIANT}" == "valgrind" ]; then (
       cmake -Bbuild/debug -DCMAKE_BUILD_TYPE=Debug -DBOOST_UT_ENABLE_MEMCHECK=ON -H. && cmake --build build/debug &&
       cmake -Bbuild/release -DCMAKE_BUILD_TYPE=Release -DBOOST_UT_ENABLE_MEMCHECK=ON -H. && cmake --build build/release
